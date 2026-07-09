@@ -719,47 +719,49 @@ button {
   .heroInner {
     min-height: calc(100svh - 20px);
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 26px;
-    padding: clamp(58px, 12vw, 90px) clamp(18px, 6vw, 44px);
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    gap: clamp(16px, 3vh, 28px);
+    padding: clamp(34px, 7vh, 64px) clamp(18px, 6vw, 44px);
   }
 
   .heroInner .eyebrow {
-    top: clamp(28px, 6vh, 54px);
-    left: clamp(20px, 5vw, 42px);
+    position: static;
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
     margin: 0;
   }
 
   .heroInner .heroLogoTitle {
-    position: absolute;
-    top: 44%;
-    left: 50%;
+    position: static;
     grid-column: 1;
     grid-row: 2;
+    align-self: center;
     justify-self: center;
     margin: 0;
-    transform: translate(-50%, -50%);
+    transform: none;
   }
 
   .heroInner .heroText {
-    position: absolute;
-    top: auto;
-    left: 50%;
+    position: static;
     bottom: clamp(92px, 14vh, 130px);
     grid-column: 1;
     grid-row: 3;
-    align-self: start;
-    margin-top: 0;
-    transform: translateX(-50%);
+    align-self: center;
+    justify-self: center;
+    margin: 0;
+    transform: none;
   }
 
   .heroLogoTitle {
-    width: min(64vw, 480px);
+    width: min(66vw, 440px);
   }
 
   .heroRomanMark {
-    right: clamp(20px, 5vw, 42px);
-    bottom: clamp(28px, 5vh, 48px);
+    position: static;
+    grid-column: 1;
+    grid-row: 4;
+    justify-self: end;
     text-align: right;
   }
 
@@ -834,19 +836,10 @@ button {
   }
 
   .heroLogoTitle {
-    width: min(68vw, 330px);
-  }
-
-  .heroInner .heroLogoTitle {
-    top: 36%;
-  }
-
-  .heroInner .heroText {
-    bottom: 29vh;
+    width: min(70vw, 320px);
   }
 
   .heroRomanMark {
-    bottom: 7vh;
     font-size: 23px;
   }
 
