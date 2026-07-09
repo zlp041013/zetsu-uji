@@ -837,7 +837,16 @@ button {
     width: min(68vw, 330px);
   }
 
+  .heroInner .heroLogoTitle {
+    top: 36%;
+  }
+
+  .heroInner .heroText {
+    bottom: 29vh;
+  }
+
   .heroRomanMark {
+    bottom: 7vh;
     font-size: 23px;
   }
 
