@@ -179,8 +179,9 @@ function App() {
           <p className="eyebrow">Established in 2026</p>
           <h1 className="heroLogoTitle">
             <img src={brandLogo} alt="" />
-            <span className="heroRomanMark">ZETSU/UJI</span>
+            <span className="srOnly">ZETSU/UJI</span>
           </h1>
+          <span className="heroRomanMark">ZETSU/UJI</span>
           <p className="heroText">
             舐めるを断ち切る
           </p>
