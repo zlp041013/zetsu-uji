@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  ArrowDown,
   BookOpen,
   Feather,
   HeartHandshake,
@@ -54,9 +53,109 @@ const advantages = [
 ];
 
 function App() {
+  const [navOnColor, setNavOnColor] = useState(false);
+  const [navVisible, setNavVisible] = useState(false);
+
+  useEffect(() => {
+    const updateNavTone = () => {
+      const nav = document.querySelector('.nav');
+      if (!nav) return;
+
+      const shouldShowNav = window.scrollY > window.innerHeight * 0.62;
+      setNavVisible(shouldShowNav);
+
+      const rect = nav.getBoundingClientRect();
+      const y = rect.bottom - 22;
+      const points = [0.25, 0.5, 0.75].map((ratio) => [rect.left + rect.width * ratio, y]);
+      const isOverAccent = points.some(([x, pointY]) =>
+        document
+          .elementsFromPoint(x, pointY)
+          .some((element) => !nav.contains(element) && element.closest?.('.issueCard, .advantageCard')),
+      );
+
+      setNavOnColor(shouldShowNav && isOverAccent);
+    };
+
+    updateNavTone();
+    window.addEventListener('scroll', updateNavTone, { passive: true });
+    window.addEventListener('resize', updateNavTone);
+
+    return () => {
+      window.removeEventListener('scroll', updateNavTone);
+      window.removeEventListener('resize', updateNavTone);
+    };
+  }, []);
+
+  useEffect(() => {
+    const stage = document.querySelector('.heroBackdrop');
+    const shapes = Array.from(document.querySelectorAll('.floatingShape'));
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    if (!stage || !shapes.length || reducedMotion.matches) return undefined;
+
+    const stageRect = stage.getBoundingClientRect();
+    const states = shapes.map((shape, index) => {
+      const rect = shape.getBoundingClientRect();
+      const speed = 18 + Math.random() * 16;
+      const angle = Math.random() * Math.PI * 2;
+
+      shape.style.left = `${rect.left - stageRect.left}px`;
+      shape.style.top = `${rect.top - stageRect.top}px`;
+      shape.style.right = 'auto';
+      shape.style.bottom = 'auto';
+
+      return {
+        shape,
+        x: rect.left - stageRect.left,
+        y: rect.top - stageRect.top,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        rotation: Number(shape.dataset.rotation || index * 4),
+      };
+    });
+
+    let frameId;
+    let previousTime = performance.now();
+
+    const animate = (time) => {
+      const delta = Math.min((time - previousTime) / 1000, 0.04);
+      previousTime = time;
+      const width = stage.clientWidth;
+      const height = stage.clientHeight;
+
+      states.forEach((state) => {
+        const maxX = Math.max(0, width - state.shape.offsetWidth);
+        const maxY = Math.max(0, height - state.shape.offsetHeight);
+        state.x += state.vx * delta;
+        state.y += state.vy * delta;
+
+        if (state.x <= 0 || state.x >= maxX) {
+          state.x = Math.min(maxX, Math.max(0, state.x));
+          state.vx *= -1;
+        }
+        if (state.y <= 0 || state.y >= maxY) {
+          state.y = Math.min(maxY, Math.max(0, state.y));
+          state.vy *= -1;
+        }
+
+        state.shape.style.transform = `translate3d(${state.x}px, ${state.y}px, 0) rotate(${state.rotation}deg)`;
+      });
+
+      frameId = requestAnimationFrame(animate);
+    };
+
+    shapes.forEach((shape) => {
+      shape.style.left = '0';
+      shape.style.top = '0';
+    });
+    frameId = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(frameId);
+  }, []);
+
   return (
     <main>
-      <nav className="nav">
+      <nav className={`nav ${navVisible ? 'navVisible' : ''} ${navOnColor ? 'navOnColor' : ''}`}>
         <a className="brandMark" href="#home" aria-label="ZETSU/UJI ホーム">
           <img src={brandLogo} alt="舌氏" />
         </a>
@@ -71,27 +170,25 @@ function App() {
 
       <section id="home" className="hero">
         <div className="heroBackdrop" aria-hidden="true">
-          <div className="sunDisc" />
-          <div className="paper paperOne" />
-          <div className="paper paperTwo" />
+          <div className="outlineDisc floatingShape" />
+          <div className="sunDisc floatingShape" />
+          <div className="paper paperOne floatingShape" data-rotation="-9" />
+          <div className="paper paperTwo floatingShape" data-rotation="12" />
         </div>
         <div className="container heroInner">
-          <p className="eyebrow">A quiet magazine for tender emotions</p>
+          <p className="eyebrow">Established in 2026</p>
           <h1 className="heroLogoTitle">
             <img src={brandLogo} alt="" />
-            <span className="srOnly">ZETSU/UJI</span>
+            <span className="heroRomanMark">ZETSU/UJI</span>
           </h1>
           <p className="heroText">
-            感情に寄り添う雑誌。日々の中でそっと折りたたまれた心の声を集め、言葉、写真、読者からの手紙を通して、不確かな気持ちを留めておけるページへと整えます。
+            舐めるを断ち切る
           </p>
-          <a className="scrollCue" href="#philosophy" aria-label="ブランド理念へ">
-            <ArrowDown size={20} />
-          </a>
         </div>
       </section>
 
-      <section id="philosophy" className="section philosophy">
-        <div className="container split">
+      <section className="section philosophy">
+        <div id="philosophy" className="container split">
           <div>
             <p className="eyebrow">Brand Philosophy</p>
             <h2>感情が見つめられ、やさしく手放される場所へ。</h2>
@@ -107,8 +204,8 @@ function App() {
         </div>
       </section>
 
-      <section id="products" className="section products">
-        <div className="container">
+      <section className="section products">
+        <div id="products" className="container">
           <div className="sectionHead">
             <p className="eyebrow">Selected Issues</p>
             <h2>特集号</h2>
@@ -131,8 +228,8 @@ function App() {
         </div>
       </section>
 
-      <section id="advantages" className="section advantages">
-        <div className="container">
+      <section className="section advantages">
+        <div id="advantages" className="container">
           <div className="sectionHead centered">
             <p className="eyebrow">What Makes Us Different</p>
             <h2>ブランドだけの魅力</h2>
@@ -149,8 +246,8 @@ function App() {
         </div>
       </section>
 
-      <section id="submit" className="section submit">
-        <div className="container submitShell">
+      <section className="section submit">
+        <div id="submit" className="container submitShell">
           <div className="submitIntro">
             <p className="eyebrow">Reader Letters</p>
             <h2>あなたの問いを、次の一冊へ。</h2>
@@ -179,8 +276,8 @@ function App() {
         </div>
       </section>
 
-      <footer id="contact" className="contact">
-        <div className="container contactInner">
+      <footer className="contact">
+        <div id="contact" className="container contactInner">
           <p className="eyebrow">Stay With Us</p>
           <img className="contactLogo" src={brandLogo} alt="舌氏" />
           <div className="contactLinks">

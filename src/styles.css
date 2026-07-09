@@ -10,6 +10,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   scroll-behavior: smooth;
+  scroll-padding-top: 110px;
 }
 
 * {
@@ -20,9 +21,10 @@ body {
   margin: 0;
   min-width: 320px;
   background:
-    radial-gradient(circle at top left, rgba(229, 0, 110, 0.045), transparent 34rem),
-    radial-gradient(circle at 92% 34%, rgba(229, 0, 110, 0.035), transparent 30rem),
-    linear-gradient(180deg, #fffefd 0%, #ffffff 52%, #fbfaf7 100%);
+    radial-gradient(circle at 12% 18%, rgba(229, 0, 110, 0.045) 0 9rem, transparent 9.2rem),
+    radial-gradient(circle at 82% 20%, rgba(229, 0, 110, 0.04) 0 8rem, transparent 8.2rem),
+    radial-gradient(circle at 78% 76%, rgba(229, 0, 110, 0.03) 0 10rem, transparent 10.2rem),
+    linear-gradient(180deg, #fffefd 0%, #fff8fb 44%, #ffffff 100%);
 }
 
 a {
@@ -43,7 +45,7 @@ main::before {
   background:
     repeating-linear-gradient(116deg, transparent 0 20px, rgba(229, 0, 110, 0.095) 20px 21px, transparent 21px 42px),
     repeating-linear-gradient(26deg, transparent 0 26px, rgba(229, 0, 110, 0.058) 26px 27px, transparent 27px 54px);
-  opacity: 0.72;
+  opacity: 0.86;
   pointer-events: none;
 }
 
@@ -70,7 +72,7 @@ textarea {
   z-index: 20;
   display: flex;
   width: min(calc(100% - 36px), 1700px);
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(-18px) scale(0.92);
   align-items: center;
   justify-content: space-between;
   gap: 24px;
@@ -81,6 +83,26 @@ textarea {
   box-shadow: 0 18px 50px rgba(229, 0, 110, 0.08);
   backdrop-filter: blur(24px) saturate(1.25);
   -webkit-backdrop-filter: blur(24px) saturate(1.25);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 260ms ease,
+    transform 260ms ease,
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.navVisible {
+  transform: translateX(-50%) translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.navOnColor {
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(229, 0, 110, 0.54);
+  box-shadow: 0 18px 50px rgba(229, 0, 110, 0.18);
 }
 
 .brandMark {
@@ -97,6 +119,11 @@ textarea {
   display: block;
   width: auto;
   height: 34px;
+  transition: filter 180ms ease;
+}
+
+.navOnColor .brandMark img {
+  filter: brightness(0) invert(1);
 }
 
 .navLinks {
@@ -105,7 +132,26 @@ textarea {
   justify-content: flex-end;
   gap: 8px 22px;
   font-size: 14px;
-  color: #756f67;
+  color: var(--accent);
+  font-weight: 700;
+  transition: color 180ms ease;
+}
+
+.navLinks a {
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.36);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.62);
+  transition: background 180ms ease, text-shadow 180ms ease;
+}
+
+.navOnColor .navLinks {
+  color: #ffffff;
+}
+
+.navOnColor .navLinks a {
+  background: rgba(255, 255, 255, 0.14);
+  text-shadow: none;
 }
 
 .hero {
@@ -114,48 +160,45 @@ textarea {
   min-height: 100vh;
   overflow: hidden;
   place-items: center;
-  background: transparent;
-  padding: 130px 0 70px;
+  background: var(--accent);
+  padding: 18px;
 }
 
 .heroBackdrop {
   position: absolute;
   inset: 0;
   overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   pointer-events: none;
 }
 
-.heroBackdrop::before {
+.outlineDisc {
   position: absolute;
-  inset: 0;
-  content: "";
-  background:
-    linear-gradient(135deg, rgba(229, 0, 110, 0.085), rgba(255, 255, 255, 0.7));
-  width: min(35vw, 480px);
-  height: min(35vw, 480px);
-  top: 18vh;
-  right: 7vw;
-  border: 1px solid rgba(229, 0, 110, 0.12);
-  border-radius: 48px;
-  opacity: 0.66;
-  transform: rotate(-10deg);
+  width: min(38vw, 620px);
+  aspect-ratio: 1;
+  top: 22%;
+  right: -17vw;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-50%);
 }
 
 .heroBackdrop::after {
-  position: absolute;
-  inset: 0;
-  content: "";
-  background:
-    radial-gradient(circle at 18% 72%, rgba(229, 0, 110, 0.105) 0 9rem, transparent 9.1rem),
-    radial-gradient(circle at 86% 18%, rgba(229, 0, 110, 0.07) 0 7rem, transparent 7.1rem),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.28));
+  content: none;
+}
+
+.floatingShape {
+  will-change: transform;
 }
 
 .sunDisc {
   position: absolute;
-  right: 9vw;
-  bottom: 14vh;
-  width: min(28vw, 430px);
+  right: 3vw;
+  bottom: -12vh;
+  width: min(18vw, 290px);
   aspect-ratio: 1;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.34);
@@ -164,44 +207,71 @@ textarea {
 
 .paper {
   position: absolute;
-  border: 1px solid rgba(229, 0, 110, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.42);
   box-shadow: 0 22px 70px rgba(229, 0, 110, 0.05);
 }
 
 .paperOne {
-  left: 8vw;
-  bottom: 16vh;
-  width: 210px;
-  height: 290px;
+  left: 5vw;
+  bottom: 7vh;
+  width: 180px;
+  height: 250px;
   transform: rotate(-9deg);
 }
 
 .paperTwo {
-  right: 21vw;
-  top: 19vh;
-  width: 160px;
-  height: 220px;
+  right: 5vw;
+  top: 8vh;
+  width: 130px;
+  height: 180px;
   transform: rotate(12deg);
 }
 
 .heroInner {
   position: relative;
   z-index: 1;
-  display: flex;
-  min-height: calc(100vh - 200px);
-  flex-direction: column;
+  display: grid;
+  min-height: calc(100vh - 36px);
+  grid-template-columns: minmax(260px, 0.72fr) minmax(440px, 1.28fr);
+  grid-template-rows: 1fr auto 1fr;
   align-items: center;
-  justify-content: center;
+  column-gap: clamp(38px, 6vw, 120px);
+  padding: clamp(54px, 7vw, 108px);
   text-align: left;
 }
 
 .heroInner .eyebrow,
 .heroInner h1,
-.heroInner .heroText,
-.heroInner .scrollCue {
-  align-self: flex-start;
+.heroInner .heroText {
+  align-self: auto;
+}
+
+.heroInner .eyebrow {
+  position: absolute;
+  top: clamp(34px, 6vh, 72px);
+  left: clamp(24px, 4vw, 72px);
+  margin: 0;
+  color: #ffffff;
+  font-family: "Arial Rounded MT Bold", "Hiragino Maru Gothic ProN", "Hiragino Maru Gothic Pro", sans-serif;
+  font-size: clamp(25px, 2.25vw, 40px);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.heroInner .heroLogoTitle {
+  grid-column: 2;
+  grid-row: 1 / 4;
+  align-self: center;
+  justify-self: center;
+}
+
+.heroInner .heroText {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: end;
+  margin-top: clamp(88px, 11vh, 140px);
 }
 
 .eyebrow {
@@ -230,9 +300,9 @@ h1 {
 }
 
 .heroLogoTitle {
-  width: min(58vw, 620px);
+  width: min(40vw, 680px);
   max-width: 100%;
-  margin-bottom: 30px;
+  margin: 0;
   line-height: 1;
 }
 
@@ -240,6 +310,21 @@ h1 {
   display: block;
   width: 100%;
   height: auto;
+  filter: brightness(0) invert(1);
+}
+
+.heroRomanMark {
+  position: absolute;
+  right: clamp(24px, 4vw, 72px);
+  bottom: clamp(34px, 6vh, 72px);
+  display: block;
+  margin: 0;
+  color: #ffffff;
+  font-family: "Arial Rounded MT Bold", "Hiragino Maru Gothic ProN", "Hiragino Maru Gothic Pro", sans-serif;
+  font-size: clamp(25px, 2.25vw, 40px);
+  font-weight: 800;
+  line-height: 1;
+  text-align: right;
 }
 
 .srOnly {
@@ -268,25 +353,39 @@ h3 {
 }
 
 .heroText {
-  max-width: 760px;
-  color: #5a5550;
-  font-size: clamp(17px, 2vw, 24px);
-  line-height: 1.9;
+  max-width: 520px;
+  color: #ffffff;
+  font-size: clamp(30px, 3vw, 52px);
+  font-weight: 700;
+  line-height: 1.35;
 }
 
-.scrollCue {
-  display: inline-grid;
-  width: 48px;
-  height: 48px;
-  margin-top: 44px;
-  place-items: center;
-  border: 1px solid rgba(154, 137, 128, 0.2);
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.74);
+@media (orientation: portrait) {
+  .heroInner .heroText {
+    width: 100%;
+    min-width: 0;
+    justify-self: center;
+    font-size: clamp(24px, 6.2vw, 34px);
+    text-align: center;
+    white-space: nowrap;
+  }
 }
 
 .section {
   padding: 140px 0;
+}
+
+.philosophy {
+  padding-top: 220px;
+  background:
+    linear-gradient(
+      180deg,
+      var(--accent) 0,
+      rgba(229, 0, 110, 0.82) 42px,
+      rgba(245, 117, 178, 0.42) 112px,
+      rgba(255, 241, 248, 0.76) 178px,
+      rgba(255, 255, 255, 0) 270px
+    );
 }
 
 .split {
@@ -407,6 +506,10 @@ h3 {
 .advantageCard p {
   color: rgba(255, 255, 255, 0.82);
   line-height: 1.85;
+}
+
+.advantageCard h3 {
+  color: #ffffff;
 }
 
 .iconBadge {
@@ -570,6 +673,10 @@ button {
 }
 
 @media (max-width: 980px) {
+  :root {
+    scroll-padding-top: 190px;
+  }
+
   .container {
     width: min(100% - 32px, 1700px);
   }
@@ -593,35 +700,57 @@ button {
     width: 100%;
     justify-content: space-between;
     gap: 8px;
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .hero {
     min-height: 100svh;
-    padding-top: 150px;
+    padding: 10px;
   }
 
-  .heroBackdrop::before {
-    width: 58vw;
-    height: 58vw;
-    top: 19vh;
-    right: -18vw;
-    border-radius: 34px;
-  }
-
-  .heroBackdrop::after {
-    background:
-      radial-gradient(circle at 14% 78%, rgba(229, 0, 110, 0.09) 0 6rem, transparent 6.1rem),
-      radial-gradient(circle at 92% 22%, rgba(229, 0, 110, 0.055) 0 5rem, transparent 5.1rem),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.28));
+  .outlineDisc {
+    width: 64vw;
+    height: auto;
+    top: 24%;
+    right: -38vw;
+    border-radius: 50%;
   }
 
   .heroInner {
-    min-height: calc(100svh - 210px);
+    min-height: calc(100svh - 20px);
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 26px;
+    padding: clamp(58px, 12vw, 90px) clamp(18px, 6vw, 44px);
+  }
+
+  .heroInner .eyebrow {
+    top: clamp(28px, 6vh, 54px);
+    left: clamp(20px, 5vw, 42px);
+    margin: 0;
+  }
+
+  .heroInner .heroLogoTitle {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: center;
+  }
+
+  .heroInner .heroText {
+    grid-column: 1;
+    grid-row: 3;
+    align-self: start;
+    margin-top: 0;
   }
 
   .heroLogoTitle {
-    width: min(78vw, 520px);
+    width: min(76vw, 560px);
+  }
+
+  .heroRomanMark {
+    right: clamp(20px, 5vw, 42px);
+    bottom: clamp(28px, 5vh, 48px);
+    text-align: right;
   }
 
   .paperOne,
@@ -629,8 +758,37 @@ button {
     opacity: 0.38;
   }
 
+  .paperOne {
+    left: -12vw;
+    bottom: 8vh;
+  }
+
+  .paperTwo {
+    top: 17vh;
+    right: -9vw;
+  }
+
+  .sunDisc {
+    right: -16vw;
+    bottom: 8vh;
+    width: min(34vw, 220px);
+  }
+
   .section {
     padding: 92px 0;
+  }
+
+  .philosophy {
+    padding-top: 160px;
+    background:
+      linear-gradient(
+        180deg,
+        var(--accent) 0,
+        rgba(229, 0, 110, 0.72) 32px,
+        rgba(248, 151, 198, 0.36) 82px,
+        rgba(255, 245, 250, 0.72) 128px,
+        rgba(255, 255, 255, 0) 190px
+      );
   }
 
   .split,
@@ -660,11 +818,21 @@ button {
   }
 
   .heroText {
-    font-size: 16px;
+    max-width: 100%;
+    font-size: clamp(28px, 7vw, 40px);
+    line-height: 1.4;
   }
 
   .heroLogoTitle {
-    width: min(86vw, 430px);
+    width: min(82vw, 390px);
+  }
+
+  .heroRomanMark {
+    font-size: 23px;
+  }
+
+  .heroInner .eyebrow {
+    font-size: 23px;
   }
 
   .contactLogo {
