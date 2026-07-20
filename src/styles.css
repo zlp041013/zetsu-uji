@@ -1046,11 +1046,12 @@ button {
     grid-column: 1;
     grid-row: 4;
     justify-self: end;
+    margin: 0 clamp(8px, 4vw, 24px) clamp(24px, 4.8vh, 44px) 0;
     text-align: right;
   }
 
   .heroNext {
-    bottom: 22px;
+    bottom: 18px;
     width: 50px;
     height: 50px;
   }
@@ -1100,8 +1101,38 @@ button {
     grid-template-columns: 1fr;
   }
 
+  .issueGrid {
+    justify-items: center;
+    gap: clamp(78px, 11vw, 108px);
+  }
+
   .issueCard {
+    width: min(84vw, 350px);
     min-height: auto;
+    padding: 10px 10px 26px;
+  }
+
+  .issueSticker {
+    --sticker-size: clamp(112px, 28vw, 138px);
+    left: -18px;
+    top: -28px;
+    padding: clamp(17px, 4vw, 22px) clamp(14px, 3.4vw, 18px);
+  }
+
+  .issueSticker > * {
+    transform: translateY(2px);
+  }
+
+  .issueSticker p {
+    max-width: 78%;
+    font-size: 8px;
+    line-height: 1.16;
+  }
+
+  .issueSticker h3 {
+    max-width: 78%;
+    font-size: 15px;
+    line-height: 1;
   }
 
   .letterForm {
@@ -1127,6 +1158,7 @@ button {
 
   .heroRomanMark {
     font-size: 23px;
+    margin-bottom: 40px;
   }
 
   .heroInner .eyebrow {
@@ -1139,6 +1171,58 @@ button {
 
   .sectionHead {
     display: block;
+  }
+
+  .issueGrid {
+    gap: 72px;
+  }
+
+  .issueCard {
+    width: min(78vw, 310px);
+    padding: 8px 8px 22px;
+  }
+
+  .issueCover {
+    border-radius: 3px;
+  }
+
+  .issueContent {
+    padding: 20px 14px 0;
+  }
+
+  .issueSticker {
+    --sticker-size: clamp(104px, 30vw, 122px);
+    left: -5px;
+    top: -22px;
+    row-gap: 3px;
+    padding: 17px 13px;
+  }
+
+  .issueSticker > * {
+    transform: translateY(1px);
+  }
+
+  .issueSticker p {
+    max-width: 72%;
+    font-size: 7px;
+    line-height: 1.18;
+  }
+
+  .issueSticker h3 {
+    max-width: 72%;
+    font-size: 13px;
+    line-height: 1.02;
+  }
+
+  .issueNote {
+    padding-right: 58px;
+    font-size: 13px;
+  }
+
+  .issueNumber {
+    right: 14px;
+    bottom: 12px;
+    font-size: 13px;
   }
 
   .advantageCard {
