@@ -21,9 +21,6 @@ body {
   margin: 0;
   min-width: 320px;
   background:
-    radial-gradient(circle at 12% 18%, rgba(229, 0, 110, 0.045) 0 9rem, transparent 9.2rem),
-    radial-gradient(circle at 82% 20%, rgba(229, 0, 110, 0.04) 0 8rem, transparent 8.2rem),
-    radial-gradient(circle at 78% 76%, rgba(229, 0, 110, 0.03) 0 10rem, transparent 10.2rem),
     linear-gradient(180deg, #fffefd 0%, #fff8fb 44%, #ffffff 100%);
 }
 
@@ -67,42 +64,37 @@ textarea {
 
 .nav {
   position: fixed;
-  top: 18px;
+  top: 0;
   left: 50%;
   z-index: 20;
   display: flex;
-  width: min(calc(100% - 36px), 1700px);
-  transform: translateX(-50%) translateY(-18px) scale(0.92);
+  width: 100%;
+  transform: translateX(-50%) translateY(-100%);
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  padding: 14px 18px;
-  border: 1px solid rgba(154, 137, 128, 0.13);
-  border-radius: 26px;
-  background: rgba(255, 255, 255, 0.56);
-  box-shadow: 0 18px 50px rgba(229, 0, 110, 0.08);
-  backdrop-filter: blur(24px) saturate(1.25);
-  -webkit-backdrop-filter: blur(24px) saturate(1.25);
+  gap: 22px;
+  padding: 10px 18px;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 3px solid var(--accent);
+  border-left: 0;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   opacity: 0;
   pointer-events: none;
   transition:
     opacity 260ms ease,
     transform 260ms ease,
-    background 180ms ease,
-    border-color 180ms ease,
     box-shadow 180ms ease;
 }
 
 .navVisible {
-  transform: translateX(-50%) translateY(0) scale(1);
+  transform: translateX(-50%) translateY(0);
   opacity: 1;
   pointer-events: auto;
-}
-
-.navOnColor {
-  border-color: rgba(255, 255, 255, 0.24);
-  background: rgba(229, 0, 110, 0.54);
-  box-shadow: 0 18px 50px rgba(229, 0, 110, 0.18);
 }
 
 .brandMark {
@@ -122,36 +114,28 @@ textarea {
   transition: filter 180ms ease;
 }
 
-.navOnColor .brandMark img {
-  filter: brightness(0) invert(1);
-}
-
 .navLinks {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 8px 22px;
-  font-size: 14px;
+  gap: 8px clamp(22px, 3vw, 44px);
   color: var(--accent);
-  font-weight: 700;
-  transition: color 180ms ease;
+  font-size: clamp(15px, 1.25vw, 19px);
+  font-weight: 800;
 }
 
 .navLinks a {
-  border-radius: 999px;
-  padding: 6px 10px;
-  background: rgba(255, 255, 255, 0.36);
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.62);
-  transition: background 180ms ease, text-shadow 180ms ease;
-}
-
-.navOnColor .navLinks {
-  color: #ffffff;
-}
-
-.navOnColor .navLinks a {
-  background: rgba(255, 255, 255, 0.14);
+  border-radius: 0;
+  padding: 4px 0;
+  background: transparent;
+  color: var(--accent);
   text-shadow: none;
+  transition: color 180ms ease, opacity 180ms ease;
+}
+
+.navLinks a:hover {
+  color: var(--accent);
+  opacity: 0.64;
 }
 
 .hero {
@@ -190,6 +174,50 @@ textarea {
   content: none;
 }
 
+.outlineDisc,
+.sunDisc,
+.philosophy::before,
+.philosophy::after {
+  clip-path: polygon(
+    50% 0%,
+    56% 10%,
+    65% 3%,
+    69% 15%,
+    80% 11%,
+    81% 24%,
+    93% 23%,
+    90% 36%,
+    100% 42%,
+    90% 50%,
+    100% 58%,
+    88% 64%,
+    93% 77%,
+    81% 76%,
+    80% 89%,
+    69% 85%,
+    65% 97%,
+    56% 90%,
+    50% 100%,
+    44% 90%,
+    35% 97%,
+    31% 85%,
+    20% 89%,
+    19% 76%,
+    7% 77%,
+    12% 64%,
+    0% 58%,
+    10% 50%,
+    0% 42%,
+    12% 36%,
+    7% 23%,
+    19% 24%,
+    20% 11%,
+    31% 15%,
+    35% 3%,
+    44% 10%
+  );
+}
+
 .floatingShape {
   will-change: transform;
 }
@@ -207,7 +235,7 @@ textarea {
 
 .paper {
   position: absolute;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.42);
   box-shadow: 0 22px 70px rgba(229, 0, 110, 0.05);
@@ -254,7 +282,7 @@ textarea {
   left: clamp(24px, 4vw, 72px);
   margin: 0;
   color: #ffffff;
-  font-family: "Arial Rounded MT Bold", "Hiragino Maru Gothic ProN", "Hiragino Maru Gothic Pro", sans-serif;
+  font-family: var(--jp-font);
   font-size: clamp(25px, 2.25vw, 40px);
   font-weight: 800;
   line-height: 1;
@@ -320,7 +348,7 @@ h1 {
   display: block;
   margin: 0;
   color: #ffffff;
-  font-family: "Arial Rounded MT Bold", "Hiragino Maru Gothic ProN", "Hiragino Maru Gothic Pro", sans-serif;
+  font-family: var(--jp-font);
   font-size: clamp(25px, 2.25vw, 40px);
   font-weight: 800;
   line-height: 1;
@@ -360,6 +388,29 @@ h3 {
   line-height: 1.35;
 }
 
+.heroNext {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(26px, 4vh, 48px);
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.46);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  transform: translateX(-50%);
+  transition: background 180ms ease, transform 180ms ease, border-color 180ms ease;
+  backdrop-filter: blur(12px);
+}
+
+.heroNext:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, 4px);
+}
+
 @media (orientation: portrait) {
   .heroInner .heroText {
     width: 100%;
@@ -376,6 +427,8 @@ h3 {
 }
 
 .philosophy {
+  position: relative;
+  overflow: hidden;
   padding-top: 220px;
   background:
     linear-gradient(
@@ -386,6 +439,35 @@ h3 {
       rgba(255, 241, 248, 0.76) 178px,
       rgba(255, 255, 255, 0) 270px
     );
+}
+
+.philosophy::before,
+.philosophy::after {
+  position: absolute;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+}
+
+.philosophy::before {
+  width: min(34vw, 460px);
+  aspect-ratio: 1;
+  left: -8vw;
+  top: 34%;
+  background: rgba(229, 0, 110, 0.045);
+}
+
+.philosophy::after {
+  width: min(26vw, 360px);
+  aspect-ratio: 1;
+  right: 4vw;
+  bottom: 18%;
+  background: rgba(229, 0, 110, 0.055);
+}
+
+.philosophy > .container {
+  position: relative;
+  z-index: 1;
 }
 
 .split {
@@ -407,6 +489,11 @@ h3 {
   margin-bottom: 0;
 }
 
+.textEmphasis {
+  color: var(--accent);
+  font-weight: 800;
+}
+
 .sectionHead {
   display: flex;
   align-items: end;
@@ -419,6 +506,21 @@ h3 {
   margin-bottom: 14px;
 }
 
+.products .sectionHead {
+  align-items: start;
+  margin-bottom: clamp(76px, 8vw, 128px);
+}
+
+.products .sectionHead h2 {
+  color: transparent;
+  font-family: var(--jp-font);
+  font-size: clamp(64px, 10vw, 150px);
+  line-height: 0.88;
+  text-transform: uppercase;
+  -webkit-text-stroke: 2px var(--accent);
+  text-shadow: none;
+}
+
 .centered {
   display: block;
   text-align: center;
@@ -427,63 +529,245 @@ h3 {
 .issueGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
+  gap: clamp(88px, 8vw, 120px) 24px;
 }
 
 .issueCard {
-  display: grid;
-  min-height: 610px;
-  overflow: hidden;
-  border: 1px solid rgba(229, 0, 110, 0.18);
-  border-radius: 28px;
-  background: var(--accent);
-  box-shadow: 0 24px 70px rgba(229, 0, 110, 0.16);
+  position: relative;
+  display: flex;
+  width: min(100%, 390px);
+  min-height: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: visible;
+  justify-self: center;
+  padding: 12px 12px 30px;
+  border: 1px solid rgba(44, 42, 39, 0.55);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 22px 58px rgba(229, 0, 110, 0.12);
 }
 
 .issueCover {
   display: flex;
-  min-height: 345px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  min-height: 0;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 34px;
+  border-radius: 4px;
   background:
-    linear-gradient(150deg, rgba(229, 0, 110, 0.94), rgba(229, 0, 110, 0.78)),
-    radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.2), transparent 18rem);
+    radial-gradient(circle at 76% 28%, rgba(255, 255, 255, 0.18) 0 6rem, transparent 6.2rem),
+    linear-gradient(150deg, rgba(229, 0, 110, 0.96), rgba(205, 0, 98, 0.86));
   color: #ffffff;
+  box-shadow: none;
 }
 
-.issueCover span {
-  align-self: flex-start;
-  color: rgba(255, 255, 255, 0.86);
-  font-size: 15px;
+.issueCoverImage {
+  padding: 0;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.issueCover svg {
+  margin-bottom: 26px;
+}
+
+.issueCover strong {
+  color: #ffffff;
+  font-family: var(--jp-font);
+  font-size: clamp(32px, 4vw, 54px);
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.issueCover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .issueContent {
-  padding: 32px;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-  background:
-    linear-gradient(135deg, rgba(229, 0, 110, 0.98), rgba(205, 0, 98, 0.92));
+  position: relative;
+  width: 100%;
+  margin-top: 0;
+  padding: 24px 14px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
-.issueContent p {
-  margin-bottom: 18px;
-  color: rgba(255, 255, 255, 0.74);
+.issueSticker {
+  --sticker-size: clamp(126px, 31vw, 166px);
+  position: absolute;
+  left: -42px;
+  top: -36px;
+  display: grid;
+  width: var(--sticker-size);
+  height: var(--sticker-size);
+  place-items: center;
+  align-content: center;
+  row-gap: 4px;
+  overflow: hidden;
+  padding: clamp(18px, 4vw, 24px) clamp(15px, 3.6vw, 21px);
+  background: var(--accent);
+  color: var(--accent);
+  filter: drop-shadow(0 14px 26px rgba(229, 0, 110, 0.14));
+  clip-path: polygon(
+    50% 0%,
+    55% 8%,
+    63% 2%,
+    67% 11%,
+    76% 7%,
+    78% 17%,
+    88% 17%,
+    86% 28%,
+    96% 32%,
+    90% 42%,
+    100% 50%,
+    90% 58%,
+    96% 68%,
+    86% 72%,
+    88% 83%,
+    78% 83%,
+    76% 93%,
+    67% 89%,
+    63% 98%,
+    55% 92%,
+    50% 100%,
+    45% 92%,
+    37% 98%,
+    33% 89%,
+    24% 93%,
+    22% 83%,
+    12% 83%,
+    14% 72%,
+    4% 68%,
+    10% 58%,
+    0% 50%,
+    10% 42%,
+    4% 32%,
+    14% 28%,
+    12% 17%,
+    22% 17%,
+    24% 7%,
+    33% 11%,
+    37% 2%,
+    45% 8%
+  );
 }
 
-.issueContent h3 {
-  color: #ffffff;
+.issueSticker::before {
+  position: absolute;
+  inset: 5px;
+  z-index: -1;
+  content: "";
+  background: #ffffff;
+  clip-path: inherit;
 }
 
-.issueContent span,
+.issueSticker p {
+  max-width: 76%;
+  margin: 0 0 3px;
+  color: rgba(229, 0, 110, 0.72);
+  font-size: clamp(7px, 1.55vw, 9.5px);
+  line-height: 1.22;
+  text-align: center;
+}
+
+.issueSticker h3 {
+  max-width: 74%;
+  margin: 0;
+  color: var(--accent);
+  font-size: clamp(13px, 2.9vw, 17px);
+  line-height: 1.05;
+  text-align: center;
+}
+
+.issueNote,
 .submitIntro p,
 .closing {
   color: #5d574e;
   line-height: 1.85;
 }
 
-.issueContent span {
-  color: rgba(255, 255, 255, 0.82);
+.issueTag {
+  display: inline-flex;
+  min-height: auto;
+  align-items: center;
+  margin-bottom: 2px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--jp-font);
+  font-size: clamp(9px, 2.1vw, 12px);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+@media (min-width: 981px) {
+  .issueSticker > * {
+    transform: translateY(-7px);
+  }
+}
+
+.issueNumber {
+  position: absolute;
+  right: 20px;
+  bottom: 14px;
+  color: rgba(44, 42, 39, 0.48);
+  font-family: var(--jp-font);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.issueNote {
+  display: block;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(44, 42, 39, 0.32);
+  padding-right: 72px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.issueContinuation {
+  width: min(100%, 390px);
+  margin: clamp(88px, 8vw, 120px) auto 0;
+  padding: 28px 32px;
+  border: 5px solid var(--accent);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--accent);
+  text-align: center;
+  box-shadow: 0 18px 50px rgba(229, 0, 110, 0.08);
+  backdrop-filter: blur(14px);
+}
+
+.issueContinuation span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.issueContinuation strong {
+  display: block;
+  font-size: clamp(30px, 4vw, 52px);
+  line-height: 1.15;
+}
+
+.issueContinuation p {
+  margin: 8px 0 0;
+  color: #6a6259;
+  font-size: clamp(15px, 1.2vw, 18px);
 }
 
 .advantageGrid {
@@ -682,8 +966,8 @@ button {
   }
 
   .nav {
-    top: 10px;
-    width: calc(100% - 20px);
+    top: 0;
+    width: 100%;
     align-items: center;
     flex-direction: column;
   }
@@ -765,6 +1049,12 @@ button {
     text-align: right;
   }
 
+  .heroNext {
+    bottom: 22px;
+    width: 50px;
+    height: 50px;
+  }
+
   .paperOne,
   .paperTwo {
     opacity: 0.38;
@@ -814,10 +1104,6 @@ button {
     min-height: auto;
   }
 
-  .issueCover {
-    min-height: 260px;
-  }
-
   .letterForm {
     grid-template-columns: 1fr;
     padding: 20px;
@@ -855,7 +1141,6 @@ button {
     display: block;
   }
 
-  .issueContent,
   .advantageCard {
     padding: 24px;
   }

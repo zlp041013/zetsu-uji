@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   BookOpen,
+  ArrowDown,
   Feather,
   HeartHandshake,
   Mail,
@@ -12,10 +13,12 @@ import {
 } from 'lucide-react';
 import './styles.css';
 import brandLogo from './assets/brand-logo.png';
+import issue01Visual from './assets/issue-01-visual.png';
 
 const issues = [
   {
     number: 'Issue 01',
+    coverImage: issue01Visual,
     title: '夜に届く返事',
     theme: '眠れない夜、想い、そして自分をそっと置くこと',
     note: '18名の読者による夜の独白を収録。やわらかな写真、短い詩、インタビューで編んだ、何度も読み返せる一冊。',
@@ -53,36 +56,20 @@ const advantages = [
 ];
 
 function App() {
-  const [navOnColor, setNavOnColor] = useState(false);
   const [navVisible, setNavVisible] = useState(false);
 
   useEffect(() => {
-    const updateNavTone = () => {
-      const nav = document.querySelector('.nav');
-      if (!nav) return;
-
-      const shouldShowNav = window.scrollY > window.innerHeight * 0.62;
-      setNavVisible(shouldShowNav);
-
-      const rect = nav.getBoundingClientRect();
-      const y = rect.bottom - 22;
-      const points = [0.25, 0.5, 0.75].map((ratio) => [rect.left + rect.width * ratio, y]);
-      const isOverAccent = points.some(([x, pointY]) =>
-        document
-          .elementsFromPoint(x, pointY)
-          .some((element) => !nav.contains(element) && element.closest?.('.issueCard, .advantageCard')),
-      );
-
-      setNavOnColor(shouldShowNav && isOverAccent);
+    const updateNavVisibility = () => {
+      setNavVisible(window.scrollY > window.innerHeight * 0.62);
     };
 
-    updateNavTone();
-    window.addEventListener('scroll', updateNavTone, { passive: true });
-    window.addEventListener('resize', updateNavTone);
+    updateNavVisibility();
+    window.addEventListener('scroll', updateNavVisibility, { passive: true });
+    window.addEventListener('resize', updateNavVisibility);
 
     return () => {
-      window.removeEventListener('scroll', updateNavTone);
-      window.removeEventListener('resize', updateNavTone);
+      window.removeEventListener('scroll', updateNavVisibility);
+      window.removeEventListener('resize', updateNavVisibility);
     };
   }, []);
 
@@ -96,7 +83,7 @@ function App() {
     const stageRect = stage.getBoundingClientRect();
     const states = shapes.map((shape, index) => {
       const rect = shape.getBoundingClientRect();
-      const speed = 18 + Math.random() * 16;
+      const speed = 34 + Math.random() * 24;
       const angle = Math.random() * Math.PI * 2;
 
       shape.style.left = `${rect.left - stageRect.left}px`;
@@ -155,7 +142,7 @@ function App() {
 
   return (
     <main>
-      <nav className={`nav ${navVisible ? 'navVisible' : ''} ${navOnColor ? 'navOnColor' : ''}`}>
+      <nav className={`nav ${navVisible ? 'navVisible' : ''}`}>
         <a className="brandMark" href="#home" aria-label="ZETSU/UJI ホーム">
           <img src={brandLogo} alt="舌氏" />
         </a>
@@ -183,8 +170,11 @@ function App() {
           </h1>
           <span className="heroRomanMark">ZETSU/UJI</span>
           <p className="heroText">
-            舐めるを断ち切る
+            舐めるを 断ち切る
           </p>
+          <a className="heroNext" href="#philosophy" aria-label="次のセクションへ">
+            <ArrowDown size={30} strokeWidth={2.4} />
+          </a>
         </div>
       </section>
 
@@ -192,14 +182,14 @@ function App() {
         <div id="philosophy" className="container split">
           <div>
             <p className="eyebrow">Brand Philosophy</p>
-            <h2>感情が見つめられ、やさしく手放される場所へ。</h2>
+            <h2>ストレス社会に悩む人たちに寄り添いたい</h2>
           </div>
           <div className="copyBlock">
             <p>
-              ZETSU/UJI は、現代を生きる人の繊細な感情に目を向けます。喪失感、疲れ、恋しさ、ためらい、そしてもう一度明るさを感じる瞬間。急いで答えを出すのではなく、自分をゆっくり読み解くための時間を届けます。
+              割り込まれたり、ぶつかられたり、文句を言われたり…日常の中で感じる小さな<span className="textEmphasis">“舐められ”</span>を<span className="textEmphasis">我慢</span>していませんか？
             </p>
             <p>
-              企画の目的は、読者のリアルな問いを起点にしたコンテンツの場をつくること。毎号が丁寧に編集された返信のように、関係、成長、孤独、セルフケアの間で、自分らしいリズムを見つける手助けをします。
+              <span className="textEmphasis">舌／氏（ZETSU/UJI）</span>は、日常の<span className="textEmphasis">“舐められ”</span>に、<span className="textEmphasis">対応できる人</span>になるためのサポートをします。例えば、かわす・距離を取る・ユーモアで返す…などうまく<span className="textEmphasis">“反応”</span>できる自分になりたくないですか？“舐められ”にあった時に、固まってしまうのは<span className="textEmphasis">“反応”のレパートリー・瞬発力</span>がないからです。そこで、舌／氏は読者と雑誌を通したコミュニケーションを行い、それをもとに作成されたカードゲームでの<span className="textEmphasis">体験学習</span>を提案します。そして有限である人生の中で、<span className="textEmphasis">自分を大切にして過ごしてほしい</span>。そんな人たちのコミュニケーション解決の場を提供したいと思います。
             </p>
           </div>
         </div>
@@ -209,22 +199,37 @@ function App() {
         <div id="products" className="container">
           <div className="sectionHead">
             <p className="eyebrow">Selected Issues</p>
-            <h2>特集号</h2>
+            <h2>舌氏月刊</h2>
           </div>
           <div className="issueGrid">
             {issues.map((issue) => (
               <article className="issueCard" key={issue.number}>
-                <div className="issueCover">
-                  <BookOpen size={34} />
-                  <span>{issue.number}</span>
+                <div className={`issueCover${issue.coverImage ? ' issueCoverImage' : ''}`}>
+                  {issue.coverImage ? (
+                    <img src={issue.coverImage} alt={`${issue.number} visual`} />
+                  ) : (
+                    <>
+                      <BookOpen size={34} />
+                      <strong>ZETSU/UJI</strong>
+                    </>
+                  )}
                 </div>
-                <div className="issueContent">
+                <div className="issueSticker">
+                  <span className="issueTag">MONTHLY</span>
                   <p>{issue.theme}</p>
                   <h3>{issue.title}</h3>
-                  <span>{issue.note}</span>
+                </div>
+                <div className="issueContent">
+                  <span className="issueNumber">{issue.number}</span>
+                  <span className="issueNote">{issue.note}</span>
                 </div>
               </article>
             ))}
+          </div>
+          <div className="issueContinuation">
+            <span>TO BE CONTINUED</span>
+            <strong>続刊予定</strong>
+            <p>舌氏月刊は、これからも読者の声とともに更新されていきます。</p>
           </div>
         </div>
       </section>
