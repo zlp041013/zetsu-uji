@@ -3,11 +3,8 @@ import { createRoot } from 'react-dom/client';
 import {
   BookOpen,
   ArrowDown,
-  Feather,
-  HeartHandshake,
   Mail,
   MessageCircle,
-  Moon,
   Send,
   Waves,
 } from 'lucide-react';
@@ -41,19 +38,16 @@ const issues = [
 
 const advantages = [
   {
-    icon: <Moon size={28} />,
-    title: '感情の物語',
-    text: '文学、写真、読者からの手紙を通して、名づけにくい感情を記録し、読む人が言葉の中で理解される場所をつくります。',
+    title: '学ぶだけではなく、体験できる',
+    text: '知るだけでは終わらない。読む、遊ぶ、考える体験を通して、「軽視」を自分ごととして捉えられるブランドです。',
   },
   {
-    icon: <Feather size={28} />,
-    title: '軽やかな美学',
-    text: '余白を生かしたレイアウト、淡い色彩、静かなビジュアルで、紙に触れるような穏やかな読書体験を届けます。',
+    title: '新しい視点',
+    text: '見方が変われば、世界も変わる。固定観念にとらわれず、多様な価値観と向き合う新しい視点を提案します。',
   },
   {
-    icon: <HeartHandshake size={28} />,
-    title: '読者と育つ企画',
-    text: '毎号、読者の問いからテーマを広げ、投稿、Q&A、編集部からの返信を継続的に育つコンテンツにしていきます。',
+    title: 'コミュニケーション',
+    text: '理解は、対話から生まれる。一人ではなく、人とつながることで新しい気づきや共感を育てることを大切にしています。',
   },
 ];
 
@@ -244,7 +238,6 @@ function App() {
           <div className="advantageGrid">
             {advantages.map((item) => (
               <article className="advantageCard" key={item.title}>
-                <div className="iconBadge">{item.icon}</div>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
               </article>

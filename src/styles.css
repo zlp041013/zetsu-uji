@@ -771,35 +771,41 @@ h3 {
 }
 
 .advantageCard {
-  min-height: 300px;
-  padding: 34px;
-  border: 1px solid rgba(229, 0, 110, 0.18);
-  border-radius: 28px;
-  background:
-    linear-gradient(135deg, rgba(229, 0, 110, 0.96), rgba(205, 0, 98, 0.9));
+  --advantage-image: url("./assets/advantage-experience.png");
+  display: flex;
+  min-height: clamp(340px, 34vw, 520px);
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(28px, 3vw, 46px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 12px;
+  background-image:
+    linear-gradient(180deg, rgba(20, 14, 17, 0.08) 16%, rgba(20, 14, 17, 0.78) 100%),
+    var(--advantage-image);
+  background-position: center;
+  background-size: 100% 100%, cover;
+  background-repeat: no-repeat;
   box-shadow: 0 20px 58px rgba(229, 0, 110, 0.14);
   color: #ffffff;
 }
 
+.advantageCard:nth-child(2) {
+  --advantage-image: url("./assets/advantage-perspective.png");
+}
+
+.advantageCard:nth-child(3) {
+  --advantage-image: url("./assets/advantage-communication-v4.png");
+}
+
 .advantageCard p {
+  margin-bottom: 0;
   color: rgba(255, 255, 255, 0.82);
   line-height: 1.85;
 }
 
 .advantageCard h3 {
+  margin-bottom: 18px;
   color: #ffffff;
-}
-
-.iconBadge {
-  display: grid;
-  width: 62px;
-  height: 62px;
-  margin-bottom: 44px;
-  place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: 50%;
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.12);
 }
 
 .submit {
