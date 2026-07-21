@@ -136,6 +136,25 @@ function App() {
     return () => cancelAnimationFrame(frameId);
   }, []);
 
+  const handleLetterSubmit = (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const nickname = String(formData.get('nickname') || '').trim() || '匿名';
+    const contact = String(formData.get('contact') || '').trim();
+    const message = String(formData.get('message') || '').trim();
+    const subject = `【舌氏月刊】読者投稿：${nickname}`;
+    const body = [
+      `ニックネーム：${nickname}`,
+      `連絡先：${contact}`,
+      '',
+      '投稿内容：',
+      message,
+    ].join('\n');
+
+    window.location.href = `mailto:zlp200300@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   return (
     <main>
       <nav className={`nav ${navVisible ? 'navVisible' : ''}`}>
@@ -255,20 +274,20 @@ function App() {
               最近心に残っている感情、関係、暮らしの悩みをお寄せください。編集部は届いた手紙の中からテーマを選び、今後の雑誌企画や公開返信へとつなげていきます。
             </p>
           </div>
-          <form className="letterForm">
+          <form className="letterForm" onSubmit={handleLetterSubmit}>
             <label>
               ニックネーム
-              <input type="text" placeholder="匿名でもかまいません" />
+              <input name="nickname" type="text" placeholder="匿名でもかまいません" />
             </label>
             <label>
               連絡先
-              <input type="email" placeholder="your@email.com" />
+              <input name="contact" type="email" placeholder="your@email.com" required />
             </label>
             <label className="wide">
               あなたの問い
-              <textarea placeholder="最近、心に残っていることを書いてください..." />
+              <textarea name="message" placeholder="最近、心に残っていることを書いてください..." required />
             </label>
-            <button type="button">
+            <button type="submit">
               <Send size={18} />
               手紙を送る
             </button>

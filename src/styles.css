@@ -426,6 +426,14 @@ h3 {
   padding: 140px 0;
 }
 
+.products {
+  padding-bottom: 80px;
+}
+
+.advantages {
+  padding-top: 80px;
+}
+
 .philosophy {
   position: relative;
   overflow: hidden;
@@ -829,24 +837,33 @@ h3 {
 }
 
 .letterForm {
+  --send-size: clamp(132px, 12vw, 158px);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-  padding: 30px;
-  border: 1px solid rgba(229, 0, 110, 0.16);
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 28px 76px rgba(229, 0, 110, 0.1);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  gap: 22px 18px;
+  padding: clamp(24px, 3vw, 38px);
+  border: 3px solid var(--accent);
+  border-radius: 4px;
+  background-color: #fffdfb;
+  background-image:
+    radial-gradient(circle, rgba(92, 50, 67, 0.045) 0 0.7px, transparent 0.8px),
+    radial-gradient(circle, rgba(229, 0, 110, 0.028) 0 0.6px, transparent 0.7px);
+  background-position: 0 0, 5px 7px;
+  background-size: 11px 11px, 13px 13px;
+  box-shadow: 12px 12px 0 rgba(229, 0, 110, 0.08), 0 24px 64px rgba(229, 0, 110, 0.08);
+}
+
+.letterForm .wide {
+  position: relative;
 }
 
 label {
   display: grid;
   gap: 10px;
-  color: rgba(92, 50, 67, 0.9);
+  color: var(--accent);
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 0.04em;
 }
 
 .wide {
@@ -856,10 +873,10 @@ label {
 input,
 textarea {
   width: 100%;
-  border: 1px solid rgba(229, 0, 110, 0.18);
-  border-radius: 16px;
+  border: 1px solid rgba(229, 0, 110, 0.34);
+  border-radius: 3px;
   outline: none;
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.9);
   color: #2d2a25;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
   transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
@@ -872,9 +889,9 @@ textarea::placeholder {
 
 input:focus,
 textarea:focus {
-  border-color: rgba(229, 0, 110, 0.48);
+  border-color: var(--accent);
   background: #ffffff;
-  box-shadow: 0 0 0 4px rgba(229, 0, 110, 0.08);
+  box-shadow: 4px 4px 0 rgba(229, 0, 110, 0.1);
 }
 
 input {
@@ -891,15 +908,33 @@ textarea {
 button {
   display: inline-flex;
   grid-column: 1 / -1;
-  min-height: 54px;
+  width: var(--send-size);
+  aspect-ratio: 1;
+  min-height: 0;
   align-items: center;
+  justify-self: end;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
+  padding: 24px;
   border: 0;
-  border-radius: 16px;
+  border-radius: 50%;
   background: var(--accent);
+  clip-path: polygon(
+    50% 0%, 56% 10%, 65% 3%, 69% 15%, 80% 11%, 81% 24%,
+    93% 23%, 90% 36%, 100% 42%, 90% 50%, 100% 58%, 88% 64%,
+    93% 77%, 81% 76%, 80% 89%, 69% 85%, 65% 97%, 56% 90%,
+    50% 100%, 44% 90%, 35% 97%, 31% 85%, 20% 89%, 19% 76%,
+    7% 77%, 12% 64%, 0% 58%, 10% 50%, 0% 42%, 12% 36%,
+    7% 23%, 19% 24%, 20% 11%, 31% 15%, 35% 3%, 44% 10%
+  );
   color: #fff;
   cursor: pointer;
+  line-height: 1.25;
+  margin-top: -72px;
+  margin-right: 16px;
+  position: relative;
+  text-align: center;
+  z-index: 2;
   box-shadow: 0 16px 34px rgba(229, 0, 110, 0.2);
 }
 
@@ -1119,6 +1154,14 @@ button {
     padding: 92px 0;
   }
 
+  .products {
+    padding-bottom: 40px;
+  }
+
+  .advantages {
+    padding-top: 52px;
+  }
+
   .philosophy {
     padding-top: 160px;
     background:
@@ -1174,6 +1217,7 @@ button {
   }
 
   .letterForm {
+    --send-size: 128px;
     grid-template-columns: 1fr;
     padding: 20px;
   }
