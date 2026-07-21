@@ -838,6 +838,7 @@ h3 {
 
 .letterForm {
   --send-size: clamp(132px, 12vw, 158px);
+  position: relative;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 22px 18px;
@@ -938,18 +939,78 @@ button {
   box-shadow: 0 16px 34px rgba(229, 0, 110, 0.2);
 }
 
+button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.formStatus {
+  position: absolute;
+  bottom: 32px;
+  left: clamp(24px, 3vw, 38px);
+  max-width: calc(100% - var(--send-size) - 88px);
+  margin: 0;
+  color: #5d574e;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.formStatus.success {
+  color: #9f0b54;
+}
+
+.formStatus.error {
+  color: #a32626;
+}
+
 .contact {
+  position: relative;
   display: grid;
   min-height: 100vh;
+  overflow: hidden;
   place-items: center;
   padding: 130px 0;
   background:
     repeating-linear-gradient(116deg, transparent 0 20px, rgba(229, 0, 110, 0.075) 20px 21px, transparent 21px 42px) fixed,
     repeating-linear-gradient(26deg, transparent 0 26px, rgba(229, 0, 110, 0.045) 26px 27px, transparent 27px 54px) fixed,
-    radial-gradient(circle at 16% 72%, rgba(229, 0, 110, 0.085) 0 11rem, transparent 11.1rem),
-    radial-gradient(circle at 86% 26%, rgba(229, 0, 110, 0.06) 0 8rem, transparent 8.1rem),
     linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.94));
   text-align: center;
+}
+
+.contact::before,
+.contact::after {
+  position: absolute;
+  aspect-ratio: 1;
+  content: "";
+  clip-path: polygon(
+    50% 0%, 56% 10%, 65% 3%, 69% 15%, 80% 11%, 81% 24%,
+    93% 23%, 90% 36%, 100% 42%, 90% 50%, 100% 58%, 88% 64%,
+    93% 77%, 81% 76%, 80% 89%, 69% 85%, 65% 97%, 56% 90%,
+    50% 100%, 44% 90%, 35% 97%, 31% 85%, 20% 89%, 19% 76%,
+    7% 77%, 12% 64%, 0% 58%, 10% 50%, 0% 42%, 12% 36%,
+    7% 23%, 19% 24%, 20% 11%, 31% 15%, 35% 3%, 44% 10%
+  );
+  pointer-events: none;
+}
+
+.contact::before {
+  top: calc(72% - 11rem);
+  left: calc(16% - 11rem);
+  width: 22rem;
+  background: rgba(229, 0, 110, 0.085);
+}
+
+.contact::after {
+  top: calc(26% - 8rem);
+  left: calc(86% - 8rem);
+  width: 16rem;
+  background: rgba(229, 0, 110, 0.06);
+}
+
+.contact > .container {
+  position: relative;
+  z-index: 1;
 }
 
 .contact h2 {

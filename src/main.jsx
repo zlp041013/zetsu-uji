@@ -53,6 +53,7 @@ const advantages = [
 
 function App() {
   const [navVisible, setNavVisible] = useState(false);
+  const [submissionStatus, setSubmissionStatus] = useState('idle');
 
   useEffect(() => {
     const updateNavVisibility = () => {
@@ -136,23 +137,44 @@ function App() {
     return () => cancelAnimationFrame(frameId);
   }, []);
 
-  const handleLetterSubmit = (event) => {
+  const handleLetterSubmit = async (event) => {
     event.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const nickname = String(formData.get('nickname') || '').trim() || '匿名';
     const contact = String(formData.get('contact') || '').trim();
     const message = String(formData.get('message') || '').trim();
-    const subject = `【舌氏月刊】読者投稿：${nickname}`;
-    const body = [
-      `ニックネーム：${nickname}`,
-      `連絡先：${contact}`,
-      '',
-      '投稿内容：',
-      message,
-    ].join('\n');
 
-    window.location.href = `mailto:zlp200300@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setSubmissionStatus('sending');
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/zlp200300@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          ニックネーム: nickname,
+          連絡先: contact,
+          投稿内容: message,
+          _replyto: contact,
+          _subject: `【舌氏月刊】読者投稿：${nickname}`,
+          _template: 'table',
+        }),
+      });
+      const result = await response.json();
+
+      if (!response.ok || result.success === false || result.success === 'false') {
+        throw new Error('Submission failed');
+      }
+
+      form.reset();
+      setSubmissionStatus('success');
+    } catch {
+      setSubmissionStatus('error');
+    }
   };
 
   return (
@@ -287,10 +309,14 @@ function App() {
               あなたの問い
               <textarea name="message" placeholder="最近、心に残っていることを書いてください..." required />
             </label>
-            <button type="submit">
+            <button type="submit" disabled={submissionStatus === 'sending'}>
               <Send size={18} />
-              手紙を送る
+              {submissionStatus === 'sending' ? '送信中…' : '手紙を送る'}
             </button>
+            <p className={`formStatus ${submissionStatus}`} role="status" aria-live="polite">
+              {submissionStatus === 'success' && '送信しました。ありがとうございます。'}
+              {submissionStatus === 'error' && '送信できませんでした。時間をおいて再度お試しください。'}
+            </p>
           </form>
         </div>
       </section>
