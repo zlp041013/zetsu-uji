@@ -533,6 +533,9 @@ h3 {
 }
 
 .issueCard {
+  --sticker-size: clamp(126px, 31vw, 166px);
+  --sticker-shift-x: -34%;
+  --sticker-shift-y: -33%;
   position: relative;
   display: flex;
   width: min(100%, 390px);
@@ -559,9 +562,7 @@ h3 {
   justify-content: center;
   padding: 34px;
   border-radius: 4px;
-  background:
-    radial-gradient(circle at 76% 28%, rgba(255, 255, 255, 0.18) 0 6rem, transparent 6.2rem),
-    linear-gradient(150deg, rgba(229, 0, 110, 0.96), rgba(205, 0, 98, 0.86));
+  background: linear-gradient(150deg, rgba(229, 0, 110, 0.96), rgba(205, 0, 98, 0.86));
   color: #ffffff;
   box-shadow: none;
 }
@@ -603,13 +604,16 @@ h3 {
 }
 
 .issueSticker {
-  --sticker-size: clamp(126px, 31vw, 166px);
   position: absolute;
-  left: -42px;
-  top: -36px;
+  left: 0;
+  top: 0;
+  translate: var(--sticker-shift-x) var(--sticker-shift-y);
   display: grid;
   width: var(--sticker-size);
   height: var(--sticker-size);
+  min-width: var(--sticker-size);
+  max-width: var(--sticker-size);
+  aspect-ratio: 1 / 1;
   place-items: center;
   align-content: center;
   row-gap: 4px;
@@ -672,11 +676,12 @@ h3 {
 }
 
 .issueSticker p {
-  max-width: 76%;
+  max-width: 80%;
   margin: 0 0 3px;
-  color: rgba(229, 0, 110, 0.72);
-  font-size: clamp(7px, 1.55vw, 9.5px);
-  line-height: 1.22;
+  color: rgba(229, 0, 110, 0.92);
+  font-size: clamp(10px, 1.1vw, 12px);
+  font-weight: 700;
+  line-height: 1.28;
   text-align: center;
 }
 
@@ -718,21 +723,10 @@ h3 {
   }
 }
 
-.issueNumber {
-  position: absolute;
-  right: 20px;
-  bottom: 14px;
-  color: rgba(44, 42, 39, 0.48);
-  font-family: var(--jp-font);
-  font-size: 14px;
-  font-weight: 800;
-}
-
 .issueNote {
   display: block;
   padding-top: 8px;
   border-top: 1px dashed rgba(44, 42, 39, 0.32);
-  padding-right: 72px;
   font-size: 14px;
   line-height: 1.5;
 }
@@ -1107,15 +1101,15 @@ button {
   }
 
   .issueCard {
+    --sticker-size: clamp(112px, 28vw, 138px);
+    --sticker-shift-x: -36%;
+    --sticker-shift-y: -35%;
     width: min(84vw, 350px);
     min-height: auto;
     padding: 10px 10px 26px;
   }
 
   .issueSticker {
-    --sticker-size: clamp(112px, 28vw, 138px);
-    left: -18px;
-    top: -28px;
     padding: clamp(17px, 4vw, 22px) clamp(14px, 3.4vw, 18px);
   }
 
@@ -1124,9 +1118,9 @@ button {
   }
 
   .issueSticker p {
-    max-width: 78%;
-    font-size: 8px;
-    line-height: 1.16;
+    max-width: 82%;
+    font-size: 10px;
+    line-height: 1.22;
   }
 
   .issueSticker h3 {
@@ -1178,6 +1172,9 @@ button {
   }
 
   .issueCard {
+    --sticker-size: clamp(100px, 29vw, 116px);
+    --sticker-shift-x: -34%;
+    --sticker-shift-y: -34%;
     width: min(78vw, 310px);
     padding: 8px 8px 22px;
   }
@@ -1191,9 +1188,6 @@ button {
   }
 
   .issueSticker {
-    --sticker-size: clamp(104px, 30vw, 122px);
-    left: -5px;
-    top: -22px;
     row-gap: 3px;
     padding: 17px 13px;
   }
@@ -1203,9 +1197,9 @@ button {
   }
 
   .issueSticker p {
-    max-width: 72%;
-    font-size: 7px;
-    line-height: 1.18;
+    max-width: 80%;
+    font-size: 9px;
+    line-height: 1.2;
   }
 
   .issueSticker h3 {
@@ -1215,13 +1209,6 @@ button {
   }
 
   .issueNote {
-    padding-right: 58px;
-    font-size: 13px;
-  }
-
-  .issueNumber {
-    right: 14px;
-    bottom: 12px;
     font-size: 13px;
   }
 
