@@ -10,8 +10,8 @@ import {
 } from 'lucide-react';
 import './styles.css';
 import brandLogo from './assets/brand-logo.png';
-import issue01Visual from './assets/issue-01-visual.png';
-import issue02Visual from './assets/issue-02-visual.png';
+import issue01Visual from './assets/issue-01-visual.webp';
+import issue02Visual from './assets/issue-02-visual.webp';
 
 const issues = [
   {
@@ -326,9 +326,9 @@ function App() {
           <p className="eyebrow">Stay With Us</p>
           <img className="contactLogo" src={brandLogo} alt="舌氏" />
           <div className="contactLinks">
-            <a href="mailto:hello@zetsuuji.example">
+            <a href="mailto:zlp200300@gmail.com">
               <Mail size={20} />
-              hello@zetsuuji.example
+              zlp200300@gmail.com
             </a>
             <a href="#submit">
               <MessageCircle size={20} />
