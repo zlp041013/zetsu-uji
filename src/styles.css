@@ -950,6 +950,44 @@ button {
   font-size: 18px;
 }
 
+@media (min-width: 981px) and (max-width: 1400px) and (orientation: landscape) {
+  .products .container {
+    width: min(92%, 1200px);
+  }
+
+  .issueGrid {
+    gap: 72px 48px;
+  }
+
+  .issueCard {
+    --sticker-size: 136px;
+    --sticker-shift-x: -24%;
+    --sticker-shift-y: -28%;
+    width: min(88%, 340px);
+    padding: 10px 10px 26px;
+  }
+
+  .issueSticker {
+    padding: 18px 15px;
+  }
+
+  .issueSticker p {
+    font-size: 10px;
+  }
+
+  .issueSticker h3 {
+    font-size: 15px;
+  }
+
+  .issueContent {
+    padding: 20px 12px 0;
+  }
+
+  .issueNote {
+    font-size: 13px;
+  }
+}
+
 @media (max-width: 980px) {
   :root {
     scroll-padding-top: 190px;
