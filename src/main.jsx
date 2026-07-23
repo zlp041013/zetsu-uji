@@ -12,6 +12,7 @@ import './styles.css';
 import brandLogo from './assets/brand-logo.png';
 import issue01Visual from './assets/issue-01-visual.webp';
 import issue02Visual from './assets/issue-02-visual.webp';
+import issue03Visual from './assets/issue-03-visual.webp';
 
 const issues = [
   {
@@ -30,6 +31,7 @@ const issues = [
   },
   {
     number: 'Issue 03',
+    coverImage: issue03Visual,
     title: '車編',
     theme: '未定',
     note: '事故にはならなくても、割り込みやあおり、無理な駐車など、日常の中で心をざわつかせる車の出来事。さまざまな事例を通して、その背景や向き合い方を考える一冊。',
