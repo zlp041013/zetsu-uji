@@ -341,7 +341,7 @@ function App() {
               ホームへ戻る
             </a>
           </div>
-          <p className="closing">どんな感情にも、そっと受け止められる場所がありますように。</p>
+          <p className="closing">ストレス社会に悩む人たちに寄り添います</p>
         </div>
       </footer>
     </main>
