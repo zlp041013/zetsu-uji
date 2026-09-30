@@ -13,6 +13,7 @@ import brandLogo from './assets/brand-logo.png';
 import issue01Visual from './assets/issue-01-visual.webp';
 import issue01Extras from './assets/issue-01-extras.jpg';
 import issue02Visual from './assets/issue-02-visual.webp';
+import issue02Extras from './assets/issue-02-extras.webp';
 import issue03Visual from './assets/issue-03-visual.webp';
 
 const issues = [
@@ -32,15 +33,19 @@ const issues = [
     title: 'ルッキズム編',
     theme: '「見た目」だけで、人は決まらない。',
     note: '見た目で決めつける前に、一歩立ち止まって考える。ルッキズムの背景や影響を知り、多様な価値観に触れられる一冊。',
+    extrasImage: issue02Extras,
+    extrasObjectPosition: 'left center',
+    extrasStickerTitle: '福笑わない',
     extras: '今号に付属するアイテムの写真と説明が入ります。',
   },
   {
     number: 'Issue 03',
     coverImage: issue03Visual,
     title: '車編',
-    theme: '未定',
+    theme: '',
     note: '事故にはならなくても、割り込みやあおり、無理な駐車など、日常の中で心をざわつかせる車の出来事。さまざまな事例を通して、その背景や向き合い方を考える一冊。',
-    extras: '今号に付属するアイテムの写真と説明が入ります。',
+    extrasPlain: true,
+    extras: '未定',
   },
 ];
 
@@ -292,7 +297,7 @@ function App() {
                     </div>
                     <div className="issueSticker">
                       <span className="issueTag">{`月刊${issue.number.replace('Issue ', '')}`}</span>
-                      <p>{issue.theme}</p>
+                      {issue.theme && <p>{issue.theme}</p>}
                       <h3>{issue.title}</h3>
                     </div>
                     <div className="issueContent">
@@ -300,16 +305,20 @@ function App() {
                     </div>
                   </div>
                   <div className="issueCardFace issueCardBack" aria-hidden={!flippedIssues.has(issue.number)}>
-                    <div className={`issueBackVisual${issue.extrasImage ? ' issueBackVisualImage' : ''}`}>
+                    <div className={`issueBackVisual${issue.extrasImage ? ' issueBackVisualImage' : ''}${issue.extrasPlain ? ' issueBackVisualPlain' : ''}`}>
                       {issue.extrasImage ? (
-                        <img src={issue.extrasImage} alt={`${issue.title}の付属カードセット`} />
-                      ) : (
+                        <img
+                          src={issue.extrasImage}
+                          alt={`${issue.title}の付属カードセット`}
+                          style={issue.extrasObjectPosition ? { objectPosition: issue.extrasObjectPosition } : undefined}
+                        />
+                      ) : !issue.extrasPlain ? (
                         <>
                           <span>THIS ISSUE COMES WITH</span>
                           <strong>今号の付録</strong>
                           <p>PHOTO<br />PLACEHOLDER</p>
                         </>
-                      )}
+                      ) : null}
                     </div>
                     <div className="issueSticker issueBackSticker">
                       <span className="issueTag">{`月刊${issue.number.replace('Issue ', '')}`}</span>

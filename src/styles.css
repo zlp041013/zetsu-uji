@@ -691,6 +691,10 @@ h3 {
   object-position: center;
 }
 
+.issueBackVisualPlain {
+  background: var(--accent);
+}
+
 .issueContent {
   position: relative;
   width: 100%;
