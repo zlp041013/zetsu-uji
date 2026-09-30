@@ -545,19 +545,51 @@ h3 {
   --sticker-shift-x: -34%;
   --sticker-shift-y: -33%;
   position: relative;
-  display: flex;
   width: min(100%, 390px);
   min-height: 0;
+  overflow: visible;
+  justify-self: center;
+  cursor: pointer;
+  perspective: 1400px;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.issueCardFlipper {
+  display: grid;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 780ms cubic-bezier(0.2, 0.72, 0.2, 1);
+}
+
+.issueCard.isFlipped .issueCardFlipper {
+  transform: rotateY(180deg);
+}
+
+.issueCardFace {
+  position: relative;
+  grid-area: 1 / 1;
+  display: flex;
+  width: 100%;
+  min-height: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  overflow: visible;
-  justify-self: center;
   padding: 12px 12px 30px;
   border: 1px solid rgba(44, 42, 39, 0.55);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 22px 58px rgba(229, 0, 110, 0.12);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.issueCardBack {
+  transform: rotateY(180deg);
+}
+
+.issueCard:focus-visible .issueCardFace {
+  box-shadow: 0 0 0 4px rgba(229, 0, 110, 0.24), 0 22px 58px rgba(229, 0, 110, 0.12);
 }
 
 .issueCover {
@@ -598,6 +630,65 @@ h3 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .issueCardFlipper {
+    transition-duration: 1ms;
+  }
+}
+
+.issueBackVisual {
+  display: flex;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 34px;
+  border-radius: 4px;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.96) 0 26%, transparent 26.5%),
+    linear-gradient(145deg, #f5bfd4, #e5006e);
+  color: #ffffff;
+  text-align: center;
+}
+
+.issueBackVisual span {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+}
+
+.issueBackVisual strong {
+  color: var(--accent);
+  font-family: var(--jp-font);
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.1;
+}
+
+.issueBackVisual p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  line-height: 1.5;
+}
+
+.issueBackVisualImage {
+  padding: 0;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.issueBackVisualImage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .issueContent {
@@ -700,6 +791,7 @@ h3 {
   font-size: clamp(13px, 2.9vw, 17px);
   line-height: 1.05;
   text-align: center;
+  white-space: pre-line;
 }
 
 .issueNote,
@@ -1066,6 +1158,9 @@ button:disabled {
     --sticker-shift-x: -24%;
     --sticker-shift-y: -28%;
     width: min(88%, 340px);
+  }
+
+  .issueCardFace {
     padding: 10px 10px 26px;
   }
 
@@ -1254,6 +1349,9 @@ button:disabled {
     --sticker-shift-y: -35%;
     width: min(84vw, 350px);
     min-height: auto;
+  }
+
+  .issueCardFace {
     padding: 10px 10px 26px;
   }
 
@@ -1325,6 +1423,9 @@ button:disabled {
     --sticker-shift-x: -34%;
     --sticker-shift-y: -34%;
     width: min(78vw, 310px);
+  }
+
+  .issueCardFace {
     padding: 8px 8px 22px;
   }
 

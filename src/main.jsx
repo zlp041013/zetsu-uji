@@ -11,6 +11,7 @@ import {
 import './styles.css';
 import brandLogo from './assets/brand-logo.png';
 import issue01Visual from './assets/issue-01-visual.webp';
+import issue01Extras from './assets/issue-01-extras.jpg';
 import issue02Visual from './assets/issue-02-visual.webp';
 import issue03Visual from './assets/issue-03-visual.webp';
 
@@ -21,6 +22,9 @@ const issues = [
     title: 'オジサン編',
     theme: '「おじさん」を知れば、見え方が変わる。',
     note: '偏見ではなく理解から始める、新しい視点の体験型マガジン。さまざまな行動や考え方を知り、身近な人との関わり方を見つめ直すきっかけを届ける。',
+    extrasImage: issue01Extras,
+    extrasStickerTitle: '返し力\nキタエール',
+    extras: '今号に付属するアイテムの写真と説明が入ります。',
   },
   {
     number: 'Issue 02',
@@ -28,6 +32,7 @@ const issues = [
     title: 'ルッキズム編',
     theme: '「見た目」だけで、人は決まらない。',
     note: '見た目で決めつける前に、一歩立ち止まって考える。ルッキズムの背景や影響を知り、多様な価値観に触れられる一冊。',
+    extras: '今号に付属するアイテムの写真と説明が入ります。',
   },
   {
     number: 'Issue 03',
@@ -35,6 +40,7 @@ const issues = [
     title: '車編',
     theme: '未定',
     note: '事故にはならなくても、割り込みやあおり、無理な駐車など、日常の中で心をざわつかせる車の出来事。さまざまな事例を通して、その背景や向き合い方を考える一冊。',
+    extras: '今号に付属するアイテムの写真と説明が入ります。',
   },
 ];
 
@@ -56,6 +62,21 @@ const advantages = [
 function App() {
   const [navVisible, setNavVisible] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState('idle');
+  const [flippedIssues, setFlippedIssues] = useState(() => new Set());
+
+  const toggleIssueFlip = (issueNumber) => {
+    setFlippedIssues((current) => {
+      const next = new Set(current);
+
+      if (next.has(issueNumber)) {
+        next.delete(issueNumber);
+      } else {
+        next.add(issueNumber);
+      }
+
+      return next;
+    });
+  };
 
   useEffect(() => {
     const updateNavVisibility = () => {
@@ -242,24 +263,63 @@ function App() {
           </div>
           <div className="issueGrid">
             {issues.map((issue) => (
-              <article className="issueCard" key={issue.number}>
-                <div className={`issueCover${issue.coverImage ? ' issueCoverImage' : ''}`}>
-                  {issue.coverImage ? (
-                    <img src={issue.coverImage} alt={`${issue.number} visual`} />
-                  ) : (
-                    <>
-                      <BookOpen size={34} />
-                      <strong>ZETSU/UJI</strong>
-                    </>
-                  )}
-                </div>
-                <div className="issueSticker">
-                  <span className="issueTag">{`月刊${issue.number.replace('Issue ', '')}`}</span>
-                  <p>{issue.theme}</p>
-                  <h3>{issue.title}</h3>
-                </div>
-                <div className="issueContent">
-                  <span className="issueNote">{issue.note}</span>
+              <article
+                className={`issueCard${flippedIssues.has(issue.number) ? ' isFlipped' : ''}`}
+                key={issue.number}
+                role="button"
+                tabIndex={0}
+                aria-label={`${issue.title}を裏返して付属内容を見る`}
+                aria-pressed={flippedIssues.has(issue.number)}
+                onClick={() => toggleIssueFlip(issue.number)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    toggleIssueFlip(issue.number);
+                  }
+                }}
+              >
+                <div className="issueCardFlipper">
+                  <div className="issueCardFace issueCardFront">
+                    <div className={`issueCover${issue.coverImage ? ' issueCoverImage' : ''}`}>
+                      {issue.coverImage ? (
+                        <img src={issue.coverImage} alt={`${issue.number} visual`} />
+                      ) : (
+                        <>
+                          <BookOpen size={34} />
+                          <strong>ZETSU/UJI</strong>
+                        </>
+                      )}
+                    </div>
+                    <div className="issueSticker">
+                      <span className="issueTag">{`月刊${issue.number.replace('Issue ', '')}`}</span>
+                      <p>{issue.theme}</p>
+                      <h3>{issue.title}</h3>
+                    </div>
+                    <div className="issueContent">
+                      <span className="issueNote">{issue.note}</span>
+                    </div>
+                  </div>
+                  <div className="issueCardFace issueCardBack" aria-hidden={!flippedIssues.has(issue.number)}>
+                    <div className={`issueBackVisual${issue.extrasImage ? ' issueBackVisualImage' : ''}`}>
+                      {issue.extrasImage ? (
+                        <img src={issue.extrasImage} alt={`${issue.title}の付属カードセット`} />
+                      ) : (
+                        <>
+                          <span>THIS ISSUE COMES WITH</span>
+                          <strong>今号の付録</strong>
+                          <p>PHOTO<br />PLACEHOLDER</p>
+                        </>
+                      )}
+                    </div>
+                    <div className="issueSticker issueBackSticker">
+                      <span className="issueTag">{`月刊${issue.number.replace('Issue ', '')}`}</span>
+                      {!issue.extrasStickerTitle && <p>この号だけの</p>}
+                      <h3>{issue.extrasStickerTitle || '付属内容'}</h3>
+                    </div>
+                    <div className="issueContent">
+                      <span className="issueNote">{issue.extras}</span>
+                    </div>
+                  </div>
                 </div>
               </article>
             ))}
