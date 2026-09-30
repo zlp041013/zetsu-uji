@@ -34,7 +34,8 @@ const issues = [
     theme: '「見た目」だけで、人は決まらない。',
     note: '見た目で決めつける前に、一歩立ち止まって考える。ルッキズムの背景や影響を知り、多様な価値観に触れられる一冊。',
     extrasImage: issue02Extras,
-    extrasObjectPosition: 'left center',
+    extrasObjectFit: 'contain',
+    extrasObjectPosition: 'center',
     extrasStickerTitle: '福笑わない',
     extras: '目隠しで顔のパーツを組み合わせ、完成した「世界に一つだけの顔」を笑わずに観察するゲーム。顔から感じた魅力や物語を言葉にし、無意識のルッキズムに気づき、見た目を決めつけずに捉える視点を育てます。',
   },
@@ -67,6 +68,7 @@ const advantages = [
 function App() {
   const [navVisible, setNavVisible] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState('idle');
+  const [submissionMessage, setSubmissionMessage] = useState('');
   const [flippedIssues, setFlippedIssues] = useState(() => new Set());
 
   const toggleIssueFlip = (issueNumber) => {
@@ -175,33 +177,37 @@ function App() {
     const message = String(formData.get('message') || '').trim();
 
     setSubmissionStatus('sending');
+    setSubmissionMessage('');
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/zlp200300@gmail.com', {
+      const response = await fetch('/api/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          ニックネーム: nickname,
-          連絡先: contact,
-          投稿内容: message,
-          _replyto: contact,
-          _subject: `【舌氏月刊】読者投稿：${nickname}`,
-          _template: 'table',
+          nickname,
+          contact,
+          message,
+          website: String(formData.get('website') || ''),
         }),
       });
-      const result = await response.json();
+      const result = await response.json().catch(() => ({
+        success: false,
+        message: 'サーバーから正しい応答がありませんでした。',
+      }));
 
-      if (!response.ok || result.success === false || result.success === 'false') {
-        throw new Error('Submission failed');
+      if (!response.ok || result.success !== true) {
+        throw new Error(result.message || '送信に失敗しました。');
       }
 
       form.reset();
       setSubmissionStatus('success');
-    } catch {
+      setSubmissionMessage('送信しました。ありがとうございます。');
+    } catch (error) {
       setSubmissionStatus('error');
+      setSubmissionMessage(error.message || '送信できませんでした。時間をおいて再度お試しください。');
     }
   };
 
@@ -310,7 +316,10 @@ function App() {
                         <img
                           src={issue.extrasImage}
                           alt={`${issue.title}の付属カードセット`}
-                          style={issue.extrasObjectPosition ? { objectPosition: issue.extrasObjectPosition } : undefined}
+                          style={(issue.extrasObjectFit || issue.extrasObjectPosition) ? {
+                            objectFit: issue.extrasObjectFit,
+                            objectPosition: issue.extrasObjectPosition,
+                          } : undefined}
                         />
                       ) : !issue.extrasPlain ? (
                         <>
@@ -368,6 +377,7 @@ function App() {
             </p>
           </div>
           <form className="letterForm" onSubmit={handleLetterSubmit}>
+            <input className="formHoney" name="website" type="text" tabIndex="-1" autoComplete="off" aria-hidden="true" />
             <label>
               ニックネーム
               <input name="nickname" type="text" placeholder="匿名でもかまいません" />
@@ -385,8 +395,7 @@ function App() {
               {submissionStatus === 'sending' ? '送信中…' : '手紙を送る'}
             </button>
             <p className={`formStatus ${submissionStatus}`} role="status" aria-live="polite">
-              {submissionStatus === 'success' && '送信しました。ありがとうございます。'}
-              {submissionStatus === 'error' && '送信できませんでした。時間をおいて再度お試しください。'}
+              {(submissionStatus === 'success' || submissionStatus === 'error') && submissionMessage}
             </p>
           </form>
         </div>

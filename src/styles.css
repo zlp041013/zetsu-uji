@@ -950,6 +950,15 @@ h3 {
   box-shadow: 12px 12px 0 rgba(229, 0, 110, 0.08), 0 24px 64px rgba(229, 0, 110, 0.08);
 }
 
+.formHoney {
+  position: absolute !important;
+  left: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 .letterForm .wide {
   position: relative;
 }
