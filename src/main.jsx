@@ -25,7 +25,7 @@ const issues = [
     note: '偏見ではなく理解から始める、新しい視点の体験型マガジン。さまざまな行動や考え方を知り、身近な人との関わり方を見つめ直すきっかけを届ける。',
     extrasImage: issue01Extras,
     extrasStickerTitle: '返し力\nキタエール',
-    extras: '今号に付属するアイテムの写真と説明が入ります。',
+    extras: '日常の「舐められ」場面に対し、カードのひらがなを頭文字にした切り返しを即興で考えるゲーム。みんなで回答を判定しながら、反応力とコミュニケーションの引き出しを楽しく鍛えます。',
   },
   {
     number: 'Issue 02',
@@ -36,7 +36,7 @@ const issues = [
     extrasImage: issue02Extras,
     extrasObjectPosition: 'left center',
     extrasStickerTitle: '福笑わない',
-    extras: '今号に付属するアイテムの写真と説明が入ります。',
+    extras: '目隠しで顔のパーツを組み合わせ、完成した「世界に一つだけの顔」を笑わずに観察するゲーム。顔から感じた魅力や物語を言葉にし、無意識のルッキズムに気づき、見た目を決めつけずに捉える視点を育てます。',
   },
   {
     number: 'Issue 03',
